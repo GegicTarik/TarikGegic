@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if(!User.Identity.IsAuthenticated){
+
+<h1>If you are not registered,</h1>
+    <h1>please register.</h1>   
+
+}
