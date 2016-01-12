@@ -27,22 +27,19 @@ namespace TarikGegic.Controllers
             //This is for the Authenticated users to upload picture
             if (User.Identity.IsAuthenticated)
             {
-               
                     foreach (var file in picture.Files)
                     {
                         if (file.ContentLength > 0)
                         {
                             var fileName = Path.GetFileName(file.FileName);
                             var path = Path.Combine(Server.MapPath("~/Content/Image"), fileName);
-
                             file.SaveAs(path);
-                            
                         }
                     }
                 }
             return RedirectToAction("Index");
         }
-        //Left to do 
+        //Left to do show image on the screen
        
         [HttpGet]
         public ActionResult LogIn()
@@ -59,7 +56,6 @@ namespace TarikGegic.Controllers
                 if (IsValid(user.Email, user.Password))
                 {
                     FormsAuthentication.SetAuthCookie(user.Email, false);
-                    Index();
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -119,7 +115,6 @@ namespace TarikGegic.Controllers
         private bool IsValid(string email, string password)
         {
             var crypto = new SimpleCrypto.PBKDF2();
-
             bool isValid = false;
 
             using(var db = new MainDbContent())
@@ -137,14 +132,15 @@ namespace TarikGegic.Controllers
             return isValid;
         }
 
+        //Send email after register
         protected void SendMail(UserModel user)
         {
             // Gmail Address from where you send the mail
-            var fromAddress = "gegicta@gmail.com";
+            var fromAddress = "yourEmail@gmail.com";
             // any address where the email will be sending
             var toAddress = user.Email;
             //Password of your gmail address
-            const string fromPassword = "TarikProject";
+            const string fromPassword = "yourPassword";
             // Passing the values and make a email formate to display
             string subject = "Register successful!";
             string body = "Dear " + user.Email + ",\n";
